@@ -2,9 +2,13 @@ FROM debian:bookworm-slim
 
 RUN apt-get -y update && apt-get install -y nginx
 
-COPY srcs/requirements/index.html /var/www/html/index.nginx-debian.html
+RUN rm -f /etc/nginx/sites-enabled/default
 
-EXPOSE 81
+COPY requirements/nginx/conf /etc/nginx/sites-enabled/default
+
+COPY requirements/index.html /var/www/html/index.html
+
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
 

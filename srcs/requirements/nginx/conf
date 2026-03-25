@@ -1,12 +1,13 @@
-server
-{
-	listen 81;
-	listen [::]:81;
+server {
+	listen 443;
+	listen [::]:443;
 
-	server_name qpqpqpqp;
+	server_name localhost;
 	
-	root .;
-	index ../index.html;
+	root /var/www/html;
+	index index.html;
 
-	location { try_files $uri $uri/ =404; }
+	location / {
+		try_files $uri $uri/ =404;
+	}
 }
