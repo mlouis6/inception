@@ -1,9 +1,14 @@
 server {
-	listen 443;
-	listen [::]:443;
-
 	server_name localhost;
 	
+	ssl_protocols TLSv1.2 TLSv1.3
+
+	listen 443 ssl;
+	listen [::]:443 ssl;
+
+	ssl_certificate /etc/nginx/certs/admantium.cert;
+	ssl_certificate_key /etc/nginx/certs/admantium.key;
+
 	root /var/www/html;
 	index index.html;
 
