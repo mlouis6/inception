@@ -1,0 +1,44 @@
+# BASH COMMANDS
+
+docker build -t IMG_NAME /my/repo
+docker run -d -p 8080:80 --name CONTAINER_NAME IMG_NAME
+# -p for ports
+# -d for detach, so run on background
+docker stop CONTAINER_NAME
+
+docker ps -a --no-trunc
+# list all containers, without -a, only running ones 
+# --no-trunc for complete id
+
+docker rm CONTAINER_NAME
+# delete that container, must not be running
+
+docker images
+# list all images
+
+docker rmi IMG_NAME
+# delete image
+
+docker system prune
+# delete everything
+
+## all CONTAINER_NAME can be replace with CONTAINER_ID
+## IMG_NAME followed by tag like ":latest"
+
+docker exec -it CONTAINER_NAME bash
+# run commands in container
+
+-----------------------------------------------------
+
+# DOCKER COMPOSE
+
+yml file
+
+services: containers to be created
+image: image to use
+ports: port use on machine and which port is expose on the container
+environment: environment variables pass to the container
+depends_on:	that container wait that the other container starts
+volumes: data persistance
+restart: condition to restart (or not restart)
+

@@ -1,0 +1,85 @@
+docker emulates OS (whereas VM emulate hardware)
+
+docker compose
+Alpine or Debian
+Dockerfiles called by docker-compose.yml in Makefile
+no DockerHub (except for Alpine)
+
+Docker containers to set up:
+	NGINX (with TLSv1.2 or TLSv1.3)
+	WordPress + php-fpm
+	MariaDB
+
+Volumes to set up (using Docker named volumes) in /home/mlouis/data:
+	WordPress database
+		must have 2 users (one of them is admin)
+	WordPress website files
+
+Also set up a docker-network
+
+Daemons, good idea or not?
+
+Forbidden:
+	tail -f
+	host
+	--link / links
+	no infinite loop to start container / entrypoint
+	bash
+	sleep infinity
+	while true
+	latest tag
+	password in Dockerfiles
+	credentials, API keys or passwords in git repo
+
+To look-up:
+	Deamons
+	PID 1
+	best practices for Dockerfiles
+
+Domain name (mlouis.42.fr) must point to local IP address
+.env file to store environment variables
+Docker secrets to store confidential information
+NGINX container is the only entrypoint via port 443
+
+-------------------
+Before VM and Containers
+one applications running per server, so multiple servers for a single company and
+since the hardware requierements weren't known before building the app,
+the servers were bought after some guessing, so often too powerful just in case, wasting money
+
+VM and VMware and VMwarts
+VM share the same hardware, each VM has it's own kernel, so can mix Debian and Windows on same hardware
+They solved the issue of dedicating a server for an app
+Since each VM has a dedicated OS that consumes CPU and RAM resources, it still isn't the optimal solution
+Because of that, they are slower and not very portable
+
+Containers
+No need for a full OS for each containers, they share the host's one
+So it's less resources allocated per container
+They're faster, more portable and easier to maintain
+Since containers share the same kernel, some containers can't be on the same machine as other
+So there are 2 types of containers: Linux containers and Windows containers
+
+Docker
+Before Docker, containers weren't available to most companies outside those who worked on it
+Docker allow containers to be accessible
+
+Docker technology: runtime, deamon, orchestrator
+
+------------------------
+LXE container (what Docker uses)
+Docker run in non-interactive mode
+-i can add interactive
+-t to add prompt?
+-it => prompt + user can write after prompt
+
+cache, so when rebuild or a similar base for a second Dockerfile, saves time and space
+
+-v or --mount? same but use differently
+(--mount is more verbose and need key=?)
+
+docker create --name web nginx:alpine
+docker start web
+# ^ equivalent to: docker run -d --name web nginx:alpine
+
+docker ps
