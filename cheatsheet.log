@@ -1,7 +1,7 @@
 # BASH COMMANDS
 
-docker build -t IMG_NAME /my/repo
-docker run -d -p 8080:80 --name CONTAINER_NAME IMG_NAME
+docker build -t IMG_NAME -f where/is/my/Dockerfile my/base/repo
+docker run -d -p 443:443 --name CONTAINER_NAME IMG_NAME
 # -p for ports
 # -d for detach, so run on background
 docker stop CONTAINER_NAME
