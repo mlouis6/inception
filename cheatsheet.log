@@ -3,7 +3,8 @@
 docker build -t IMG_NAME -f where/is/my/Dockerfile my/base/repo
 docker run -d -p 443:443 --name CONTAINER_NAME IMG_NAME
 # -p for ports
-# -d for detach, so run on background
+# -d to detach, so run on background
+# --rm to delete container once its stopped
 docker stop CONTAINER_NAME
 
 docker ps -a --no-trunc
@@ -27,6 +28,9 @@ docker system prune
 
 docker exec -it CONTAINER_NAME bash
 # run commands in container
+
+docker logs CONTAINER_NAME
+# for debugging once the container is stopped, so must not use --rm when running
 
 -----------------------------------------------------
 
