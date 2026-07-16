@@ -6,6 +6,7 @@ RUN apt-get -y update \
     ca-certificates \
     wget \
     unzip \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
@@ -20,11 +21,8 @@ RUN chown -R www-data:www-data /var/www/html
 RUN sed -i 's|^listen = .*|listen = 9000|' \
     /etc/php/8.2/fpm/pool.d/www.conf
 
-# RUN systemctl enable --now php8.4-fpm
-
 EXPOSE 9000
 
 CMD ["php-fpm8.2", "-F"]
 
-
-# CMD ["nginx", "-g", "daemon off;"]
+HEALTHCHECK CMD nc -z localhost 9000 || exit 1

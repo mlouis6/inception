@@ -1,11 +1,15 @@
-PHONY: all fclean
+.PHONY: all fclean up down
 
-COMPOSE = cd srcs && docker compose
+COMPOSE = docker compose -f srcs/docker-compose.yml
 
 all:
 	$(COMPOSE) up
 
+up:
+	$(COMPOSE) up -d
+
+down:
+	$(COMPOSE) down
+
 fclean:
-	docker stop nginx wordpress
-	docker rm nginx wordpress
-	docker rmi srcs-nginx srcs-wordpress
+	$(COMPOSE) down --rmi local
