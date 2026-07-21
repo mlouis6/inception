@@ -13,3 +13,6 @@ down:
 
 fclean:
 	$(COMPOSE) down --rmi local
+
+prune:
+	docker builder prune -af
