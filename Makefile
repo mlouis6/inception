@@ -13,6 +13,7 @@ down:
 
 fclean:
 	$(COMPOSE) down --rmi local
+	docker volume rm wp-vol
 
 prune:
 	docker builder prune -af

@@ -6,9 +6,21 @@ services:
     container_name: nginx
     ports:
       - 443:443
+    volumes:
+      - wp-data:/var/www/html:ro
   wordpress:
     build: ./requirements/wordpress/.
     container_name: wordpress
     volumes:
-      - ./requirements/:/var/www/html
+      - wp-data:/var/www/html
+      # - ./requirements/:/var/www/html
     restart: always
+
+volumes:
+  wp-data:
+    name: "wp-vol"
+    driver: local
+    driver-opts:
+      type: none
+      o: bind
+      device: /home/mlouis/data/wordpress
