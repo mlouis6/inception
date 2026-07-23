@@ -10,15 +10,6 @@ services:
       - wp-data:/var/www/html:ro
     networks:
       - incep
-  wordpress:
-    build: ./requirements/wordpress/.
-    container_name: wordpress
-    volumes:
-      - wp-data:/var/www/html
-      # - ./requirements/:/var/www/html
-    networks:
-      - incep
-    restart: always
   mariadb:
     build: ./requirements/mariadb/.
     container_name: mariadb
@@ -28,6 +19,17 @@ services:
     networks:
       - incep
     restart: always
+  wordpress:
+    build: ./requirements/wordpress/.
+    container_name: wordpress
+    volumes:
+      - wp-data:/var/www/html
+      # - ./requirements/:/var/www/html
+    networks:
+      - incep
+    restart: always
+    depends_on:
+      - mariadb
 
 volumes:
   wp-data:
