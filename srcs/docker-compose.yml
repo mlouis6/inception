@@ -4,23 +4,25 @@ services:
       context: ./requirements/
       dockerfile: nginx/Dockerfile
     container_name: nginx
-    volumes:
-      - wp_data:/var/www/html:ro
     ports:
       - 443:443
     volumes:
       - wp-data:/var/www/html:ro
     networks:
       - incep
+    depends_on:
+      - wordpress
     restart: always
   mariadb:
     build: ./requirements/mariadb/.
     container_name: mariadb
     volumes:
-      - db-data:/var/www/html
+      - db-data:/var/lib/mysql
     networks:
       - incep
-    restart: always
+    env_file:
+      - .env
+    restart: on-failure
   wordpress:
     build: ./requirements/wordpress/.
     container_name: wordpress
@@ -31,6 +33,8 @@ services:
     restart: always
     depends_on:
       - mariadb
+    env_file:
+      - .env
     ports:
       - "127.0.0.1:9000:443"
 
@@ -41,16 +45,17 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/mlouis/data/wordpress
+      # device: /home/mlouis/data/wordpress
+      device: /Users/louism/prog/inception/data/wordpress
   db-data:
     name: "db-vol"
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/mlouis/data/mariadb
+      # device: /home/mlouis/data/mariadb
+      device: /Users/louism/prog/inception/data/mariadb
 
 networks:
   incep:
     name: inc-network
-    driver: bridge

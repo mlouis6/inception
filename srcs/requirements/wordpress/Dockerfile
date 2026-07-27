@@ -3,6 +3,7 @@ FROM debian:bookworm-slim
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends \
     php-fpm \
+    php-mysql \
     ca-certificates \
     wget \
     unzip \

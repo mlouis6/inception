@@ -1,16 +1,29 @@
 #!/bin/bash
 
-# check is /var/lib/mysql empty
-if [ -z "$( ls -A '/var/lib/mysql' )" ]; then
-	mariadbd <<EOF
-	CREATE DATABASE db_test;
-	CREATE TABLE users (
-		userID int AUTO_INCREMENT PRIMARY KEY,
-		username varchar(255) NOT NULL
-	);
-	INSERT INTO users
-	VALUES ("user1");
-	EOF
-else
-	# not empty
-fi
+set -ex
+
+mkdir -p /run/mysqld
+chown mysql:mysql /run/mysqld
+chown -R mysql:mysql /var/lib/mysql
+
+mariadb-install-db \
+	--user=mysql --datadir=/var/lib/mysql
+
+mariadbd --user=mysql --skip-networking & pid="$!"
+
+until mariadb -u root -e "SELECT 1;" >/dev/null 2>&1; do
+	sleep 1
+done
+
+mariadb -u root -vvv <<EOF
+CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
+FLUSH PRIVILEGES;
+EOF
+
+mariadb-admin -u root shutdown
+wait "$pid"
+
+
+exec mariadbd --user=mysql
