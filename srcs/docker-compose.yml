@@ -8,12 +8,49 @@ services:
       - wp_data:/var/www/html:ro
     ports:
       - 443:443
+    volumes:
+      - wp-data:/var/www/html:ro
+    networks:
+      - incep
+    restart: always
+  mariadb:
+    build: ./requirements/mariadb/.
+    container_name: mariadb
+    volumes:
+      - db-data:/var/www/html
+    networks:
+      - incep
+    restart: always
   wordpress:
     build: ./requirements/wordpress/.
     container_name: wordpress
     volumes:
-      - wp_data:/var/www/html
+      - wp-data:/var/www/html
+    networks:
+      - incep
     restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - "127.0.0.1:9000:443"
 
 volumes:
-  wp_data:
+  wp-data:
+    name: "wp-vol"
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mlouis/data/wordpress
+  db-data:
+    name: "db-vol"
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/mlouis/data/mariadb
+
+networks:
+  incep:
+    name: inc-network
+    driver: bridge

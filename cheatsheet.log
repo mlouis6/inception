@@ -46,3 +46,17 @@ depends_on:	that container wait that the other container starts
 volumes: data persistance
 restart: condition to restart (or not restart)
 
+
+on vm:
+$>hostname -I
+on host:
+$>vim ~/.ssh/config
+# change ip
+
+$>VBoxManage startvm "inception" --type headless
+$>ssh -X inception
+$>VBoxManage controlvm "inception" poweroff
+
+(vm browser)
+$>netsurf
+
