@@ -21,8 +21,11 @@ RUN chown -R www-data:www-data /var/www/html
 RUN sed -i 's|^listen = .*|listen = 9000|' \
     /etc/php/8.2/fpm/pool.d/www.conf
 
+COPY web/ /var/www/html/
+
 EXPOSE 9000
 
-CMD ["php-fpm8.2", "-F"]
+ENTRYPOINT ["php-fpm8.2"]
+CMD ["-F"]
 
 HEALTHCHECK CMD nc -z localhost 9000 || exit 1

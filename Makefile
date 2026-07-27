@@ -11,5 +11,10 @@ up:
 down:
 	$(COMPOSE) down
 
+clean:
+	$(COMPOSE) down -v --rmi local
+
 fclean:
-	$(COMPOSE) down --rmi local
+	$(COMPOSE) down -v --rmi local
+	docker builder prune -af
+	

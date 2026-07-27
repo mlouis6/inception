@@ -4,11 +4,16 @@ services:
       context: ./requirements/
       dockerfile: nginx/Dockerfile
     container_name: nginx
+    volumes:
+      - wp_data:/var/www/html:ro
     ports:
       - 443:443
   wordpress:
     build: ./requirements/wordpress/.
     container_name: wordpress
     volumes:
-      - ./requirements/:/var/www/html
+      - wp_data:/var/www/html
     restart: always
+
+volumes:
+  wp_data:
