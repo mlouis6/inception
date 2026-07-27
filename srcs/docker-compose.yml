@@ -10,12 +10,12 @@ services:
       - wp-data:/var/www/html:ro
     networks:
       - incep
+    restart: always
   mariadb:
     build: ./requirements/mariadb/.
     container_name: mariadb
     volumes:
       - db-data:/var/www/html
-      # - ./requirements/:/var/www/html
     networks:
       - incep
     restart: always
@@ -24,12 +24,13 @@ services:
     container_name: wordpress
     volumes:
       - wp-data:/var/www/html
-      # - ./requirements/:/var/www/html
     networks:
       - incep
     restart: always
     depends_on:
       - mariadb
+    ports:
+      - "127.0.0.1:9000:443"
 
 volumes:
   wp-data:
