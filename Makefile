@@ -23,8 +23,10 @@ check:
 
 fclean:
 	$(COMPOSE) down -v --rmi local
-	rm -rf /Users/louism/prog/inception/data/mariadb
-	mkdir /Users/louism/prog/inception/data/mariadb
+	sudo rm -rf ~/data/wordpress
+	sudo rm -rf ~/data/mariadb
+# 	rm -rf /Users/louism/prog/inception/data/mariadb
+# 	mkdir /Users/louism/prog/inception/data/mariadb
 
 # 	docker volume rm wp-vol db-vol
 # 	docker network rm srcs_default

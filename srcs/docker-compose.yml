@@ -45,16 +45,16 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      # device: /home/mlouis/data/wordpress
-      device: /Users/louism/prog/inception/data/wordpress
+      device: /home/mlouis/data/wordpress
+      # device: /Users/louism/prog/inception/data/wordpress
   db-data:
     name: "db-vol"
     driver: local
     driver_opts:
       type: none
       o: bind
-      # device: /home/mlouis/data/mariadb
-      device: /Users/louism/prog/inception/data/mariadb
+      device: /home/mlouis/data/mariadb
+      # device: /Users/louism/prog/inception/data/mariadb
 
 networks:
   incep:
