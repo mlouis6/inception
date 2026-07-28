@@ -22,7 +22,7 @@ RUN chown -R www-data:www-data /var/www/html
 RUN sed -i 's|^listen = .*|listen = 9000|' \
     /etc/php/8.2/fpm/pool.d/www.conf
 
-COPY web/ /var/www/html/
+# COPY web/ /var/www/html/
 
 EXPOSE 9000
 
