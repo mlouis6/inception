@@ -50,3 +50,5 @@ Docker Swarm
 
 # Resources
 
+https://developer.wordpress.org/advanced-administration/
+https://ubuntu.com/tutorials/install-and-configure-wordpress

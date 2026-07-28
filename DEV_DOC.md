@@ -23,3 +23,5 @@ volumes
 docker volume create volume_name
 or
 docker run -v volume_name:/path/in/container
+
+LAMP stack (Apache instead of Nginx)

@@ -1,5 +1,6 @@
 server {
-	server_name localhost;
+	# server_name localhost;
+	server_name mlouis.42.fr;
 	
 	listen 443 ssl;
 	listen [::]:443 ssl;
@@ -10,15 +11,21 @@ server {
 	root /var/www/html;
 	index index.php index.html;
 
+	# TODO: try to divide in 2 config files
+	# https://developer.wordpress.org/advanced-administration/server/web-server/nginx/
+	# include wordpress/conf;
+
 	location / {
 		try_files $uri $uri/ /index.php$args;
 	}
 
 	location ~ \.php$ {
-		include fastcgi_params;
-		fastcgi_pass wordpress:9000;
+		fastcgi_split_path_info ^(.+\.php)(/.*)$;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_pass wordpress:9000;
+		# fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
 		fastcgi_param HTTPS on;
+		include fastcgi_params;
 	}
 
 	ssl_protocols TLSv1.2 TLSv1.3;
