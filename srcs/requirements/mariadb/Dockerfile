@@ -17,5 +17,4 @@ RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-# HEALTHCHECK CMD systemctl status mariadb || exit 1
-
+# HEALTHCHECK CMD mariadb -u root || exit 1
