@@ -1,8 +1,6 @@
 #!/bin/bash
 set -ex
 
-
-# TODO: get fmp version
 PHP_VERSION="$(ls /etc/php/ | tail -1)"
 PHP_CMD="php-fpm${PHP_VERSION} -F"
 
@@ -28,5 +26,5 @@ if [ ! -e "/var/www/html/wp-config.php" ]; then
 	fi
 fi
 
-${PHP_CMD}
+exec ${PHP_CMD}
 
