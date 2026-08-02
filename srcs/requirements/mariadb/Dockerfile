@@ -17,4 +17,4 @@ RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-# HEALTHCHECK CMD mariadb -u root || exit 1
+HEALTHCHECK --start-period=30s --start-interval=1s CMD mariadb -u root db_test -e "SELECT 1"

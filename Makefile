@@ -1,4 +1,4 @@
-.PHONY: all fclean up down prune check
+.PHONY: all fclean up down start stop prune check
 
 COMPOSE = docker compose -f srcs/docker-compose.yml
 
@@ -14,6 +14,12 @@ up:
 
 down:
 	$(COMPOSE) down
+
+start:
+	$(COMPOSE) start
+
+stop:
+	$(COMPOSE) stop
 
 check:
 	docker ps -a
