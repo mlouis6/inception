@@ -12,7 +12,7 @@ mariadb-install-db \
 mariadbd --user=mysql --skip-networking & pid="$!"
 
 until mariadb -u root -e "SELECT 1;" >/dev/null 2>&1; do
-	sleep 1
+	sleep 0.2
 done
 
 mariadb -u root -vvv <<EOF
@@ -24,6 +24,5 @@ EOF
 
 mariadb-admin -u root shutdown
 wait "$pid"
-
 
 exec mariadbd --user=mysql

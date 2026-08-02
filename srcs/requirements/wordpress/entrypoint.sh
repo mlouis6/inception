@@ -24,6 +24,14 @@ if [ ! -e "/var/www/html/wp-config.php" ]; then
 			--admin_email="$EMAIL_ADMIN" \
 			--allow-root
 	fi
+
+	wp user create \
+		"$USER_BILLY" \
+		"$EMAIL_BILLY" \
+		--user_pass="$PASSWORD_BILLY" \
+		--allow-root
+
+EMAIL_BILLY
 fi
 
 exec ${PHP_CMD}
