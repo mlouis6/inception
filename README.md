@@ -46,6 +46,11 @@ Docker Swarm
 
 ### Network
 
+### Secrets
+with .env, if you push your image, it pushes the environment, so variables are readable
+secrets gives you the ability to push images without pushing sensible informations
+encrypted and only accessable by specific services
+
 # Instructions
 
 # Resources

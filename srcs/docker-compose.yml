@@ -33,12 +33,10 @@ services:
     restart: always
     depends_on:
       mariadb:
-        condition: service_healthy
+        condition: service_healthy 
         restart: true
     env_file:
       - .env
-    ports:
-      - "127.0.0.1:9000:443"
 
 volumes:
   wp-data:

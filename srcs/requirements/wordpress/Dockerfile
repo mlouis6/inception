@@ -1,5 +1,7 @@
 FROM debian:bookworm-slim
 
+ENV LANG=C.UTF-8
+
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends \
     php-fpm \
@@ -8,6 +10,7 @@ RUN apt-get -y update \
     wget \
     unzip \
     netcat-openbsd \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
@@ -24,9 +27,15 @@ RUN wget https://wordpress.org/latest.zip \
 
 COPY --chown=www-data:www-data web/ /var/www/html/
 
+# RUN chown -R www-data:www-data /var/www/html/
+
 EXPOSE 9000
 
 COPY --chmod=+x entrypoint.sh /entrypoint.sh
+
+# RUN usermod -aG sudo www-data
+
+# USER www-data
 
 ENTRYPOINT ["/entrypoint.sh"]
 

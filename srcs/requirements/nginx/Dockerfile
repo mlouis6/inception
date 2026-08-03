@@ -1,5 +1,7 @@
 FROM debian:bookworm-slim
 
+ENV LANG=C.UTF-8
+
 RUN apt-get -y update \
     && apt-get install -y --no-install-recommends \
     nginx \
