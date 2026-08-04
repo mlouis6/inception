@@ -22,7 +22,7 @@ services:
       - incep
     env_file:
       - .env
-    restart: on-failure
+    restart: always
   wordpress:
     build: ./requirements/wordpress/.
     container_name: wordpress
