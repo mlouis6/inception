@@ -14,9 +14,6 @@ RUN mkdir -p /etc/nginx/certs \
 
 COPY nginx/conf /etc/nginx/sites-enabled/default
 
-# COPY wordpress/web/index.html /var/www/html/index.html
-# COPY wordpress/web/index.php /var/www/html/index.php
-
 EXPOSE 443
 
 ENTRYPOINT ["nginx"]

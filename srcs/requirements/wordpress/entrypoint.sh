@@ -4,7 +4,6 @@ set -ex
 PHP_VERSION="$(ls /etc/php/ | tail -1)"
 PHP_CMD="php-fpm${PHP_VERSION} -F"
 
-# wp core download --allow-root
 chown -R www-data:www-data /var/www/html/
 
 if [ ! -e "/var/www/html/wp-config.php" ]; then

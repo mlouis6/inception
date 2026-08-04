@@ -1,14 +1,22 @@
 *This project has been created as part of the 42 curriculum by mlouis.*
 
 # Description
+Goal
+Build images from scratch and run containers from them. Link them without specifiying using a network, so we'll only have nginx as an entrypoint for the all app.
+
+
 Docker usage
+
 Sources included in project
+
 Indicate main design choices
+
 Comparison between:
-	VM vs Docker
-	Secrets vs Environment vars
-	Docker Network vs Host Network
-	Docker Volumes vs Bind Mounts
+- VM vs Docker
+- Secrets vs Environment vars
+- Docker Network vs Host Network
+- Docker Volumes vs Bind Mounts
+- Ochestrors
 
 ## Virtual Machines vs Docker
 ### Before VMs and Containers
@@ -52,8 +60,32 @@ secrets gives you the ability to push images without pushing sensible informatio
 encrypted and only accessable by specific services
 
 # Instructions
+`make` create the directories where the volume will store its data, build the containers, create the volumes and the network, and finally run the images
+
+`make up` same as make but in detach mode
+
+`make down` stop the containers, remove them, remove the network
+
+`make start` start the stopped containers
+
+`make stop` stop the containers
+
+`make fclean` stop the containers, remove them, remove the network, remove the images and delete the volume folder
+
+`make prune` delete cache files
+
+`make check` display main informations on each components (containers, images, volumes, network)
 
 # Resources
 
+## AI use
+To check and go more in depth on some informations.
+
+
+
+## Sources
+Stéphane ROBERT
+
 https://developer.wordpress.org/advanced-administration/
+
 https://ubuntu.com/tutorials/install-and-configure-wordpress

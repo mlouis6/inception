@@ -25,3 +25,32 @@ or
 docker run -v volume_name:/path/in/container
 
 LAMP stack (Apache instead of Nginx)
+
+-------
+
+
+
+Dev will need to create a `.env` file in `srcs/` directory.
+The `.env` file will need to define the following variables:
+```
+WORDPRESS_PORT
+WORDPRESS_DB_HOST
+WORDPRESS_DB_NAME
+WORDPRESS_DB_USER
+WORDPRESS_DB_PASSWORD
+
+MYSQL_DATABASE
+MYSQL_USER
+MYSQL_PASSWORD
+
+USER_ADMIN
+PASSWORD_ADMIN
+EMAIL_ADMIN
+```
+
+We've had a lambda user (no admin privileges in Wordpress) using thosw variables:
+```
+USER_BILLY
+PASSWORD_BILLY
+EMAIL_BILLY
+```
