@@ -37,7 +37,7 @@ EMAIL_ONE=
 
 Then, a simple `make` command can be use to build all images and run the containers. 
 
-Finally, the user will just have to open the browser of its choice and go to [](https://mlouis.42.fr).
+Finally, the user will just have to open the browser of its choice and go to https://mlouis.42.fr.
 
 If the user prefer to launch in detach mode, the use of `make up` is recommended.
 
@@ -51,4 +51,4 @@ To get rid of cache, use `make prune`
 
 In case the user want to check anything `make check` can help and display any informations for containers, with their health status, to network.
 
-To log on the website, access [](https://mlouis.42.fr/wp-admin). The user can use the admin username and password from their `.env` file (`USER_ADMIN` and `PASSWORD_ADMIN`) if they want to manage the website or the other credentials (`USER_ONE` and `PASSWORD_ONE`) to be a lambda user and be able to comment.
+To log on the website, access https://mlouis.42.fr/wp-admin. The user can use the admin username and password from their `.env` file (`USER_ADMIN` and `PASSWORD_ADMIN`) if they want to manage the website or the other credentials (`USER_ONE` and `PASSWORD_ONE`) to be a lambda user and be able to comment.

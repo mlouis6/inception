@@ -24,11 +24,14 @@ docker volume create volume_name
 or
 docker run -v volume_name:/path/in/container
 
-LAMP stack (Apache instead of Nginx)
+LEMP stack (Linux, Nginx, MariaDB, PHP)
 
 -------
+docker exec --it <CONTAINER_NAME> bash (bash can be replaced with another command if you only need one thing)
 
+before build -> check path <!-- TODO: -->
 
+directly logged as root
 
 Dev will need to create a `.env` file in `srcs/` directory.
 The `.env` file will need to define the following variables:
