@@ -24,9 +24,9 @@ if [ ! -e "/var/www/html/wp-config.php" ]; then
 	fi
 
 	sudo -u www-data wp user create \
-		"$USER_BILLY" \
-		"$EMAIL_BILLY" \
-		--user_pass="$PASSWORD_BILLY"
+		"$USER_ONE" \
+		"$EMAIL_ONE" \
+		--user_pass="$PASSWORD_ONE"
 
 fi
 

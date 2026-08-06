@@ -1,18 +1,10 @@
 *This project has been created as part of the 42 curriculum by mlouis.*
 
 # Description
-Goal
-Build images from scratch and run containers from them. Link them without specifiying using a network, so we'll only have nginx as an entrypoint for the all app.
+Build images from scratch and run containers from them. Link them without specifiying using a network, so we'll only have nginx as an entrypoint for the whole app.
 
-
-Docker usage
-
-Sources included in project
-
-Indicate main design choices
-
+<!-- TODO: -->
 Comparison between:
-- VM vs Docker
 - Secrets vs Environment vars
 - Docker Network vs Host Network
 - Docker Volumes vs Bind Mounts
@@ -34,25 +26,40 @@ Portability, Lightwight, Scalability and Security
 Limitation: Linux environment are only for Linux container, Windows env, only for Windows containers, no Mac containers (or very limited)
 (namespaces, cgroups, capabilities)
 
-### Docker
-Docker Engine
-Docker Registry
-Docker Swarm (now less used in favor of Kubernetes)
+### Docker Engine
+It's the software that allows the build and run containers.
+
+### Docker Registry
+It is use to host and distribute images. It's link with Docker Hub which use that a cloud implementation.
+
+### Docker Swarm
+It is an ochestrator. It makes working on and managing multiple containers easier. It also make scaling and security.
+
+Usually, most people choose Kubernetes instead of Swarm, but for beginner, Swarm has an easier learning curve and it's installed with Docker. But it is meant for low maintenance stack.
 
 #### Architecture
-Docker deamon
-Docker client
-Docker image
-Docker Registry
-Docker network
-Docker Compose
-Docker Swarm
+##### Docker daemon
+Docker daemon is named dockerd. It manage the lifecycle of a container: creation, execution and monitoring. It links the client to the engine.
+
+##### Docker client
+It's a command line interface that allows the user to use all things docker.
+
+##### Docker image
+A Docker image is a package that includes all the necessary files and configuration to run a container.
+
+##### Docker Compose
+Docker Compose help run multi-container applications. It allows a unique configuration file to link all the Dockerfile and manage them all in a single command.
+
+##### Docker network
+Networking is used to give the ability for the containers to connect and communicate with each other.
 
 ### Docker vs Docker
 
 ### Volume
+Using volumes allows datas to be persistently stored for containers. So as long as you don't delete the volume, you can remove the container, even the images, and create it back up with the same datas.
 
-### Network
+There are 3 types of volumes: bind, docker and named
+<!-- TODO: explain the different kind of volumes --> 
 
 ### Secrets
 with .env, if you push your image, it pushes the environment, so variables are readable

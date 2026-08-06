@@ -33,10 +33,6 @@ EXPOSE 9000
 
 COPY --chmod=+x entrypoint.sh /entrypoint.sh
 
-# RUN usermod -aG sudo www-data
-
-# USER www-data
-
 ENTRYPOINT ["/entrypoint.sh"]
 
 HEALTHCHECK CMD nc -z localhost 9000 || exit 1

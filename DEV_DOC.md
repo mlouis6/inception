@@ -50,7 +50,7 @@ EMAIL_ADMIN
 
 We've had a lambda user (no admin privileges in Wordpress) using thosw variables:
 ```
-USER_BILLY
-PASSWORD_BILLY
-EMAIL_BILLY
+USER_ONE
+PASSWORD_ONE
+EMAIL_ONE
 ```
