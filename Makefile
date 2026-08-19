@@ -1,16 +1,16 @@
-.PHONY: all fclean up down start stop prune check
+.PHONY: all fclean up down start stop prune check re
 
 COMPOSE = docker compose -f srcs/docker-compose.yml
 
 all:
 	mkdir -p ~/data/wordpress/
 	mkdir -p ~/data/mariadb/
-	$(COMPOSE) up
+	$(COMPOSE) up --build
 
 up:
 	mkdir -p ~/data/wordpress/
 	mkdir -p ~/data/mariadb/
-	$(COMPOSE) up -d
+	$(COMPOSE) up -d --build
 
 down:
 	$(COMPOSE) down
@@ -39,3 +39,11 @@ fclean:
 
 prune:
 	docker builder prune -af
+
+re:
+	$(COMPOSE) down -v --rmi local
+	sudo rm -rf ~/data/wordpress
+	sudo rm -rf ~/data/mariadb
+	mkdir -p ~/data/wordpress/
+	mkdir -p ~/data/mariadb/
+	$(COMPOSE) up -d

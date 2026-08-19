@@ -3,6 +3,7 @@ services:
     build:
       context: ./requirements/
       dockerfile: nginx/Dockerfile
+    image: nginx
     container_name: nginx
     ports:
       - 443:443
@@ -15,6 +16,7 @@ services:
     restart: always
   mariadb:
     build: ./requirements/mariadb/.
+    image: mariadb
     container_name: mariadb
     volumes:
       - db-data:/var/lib/mysql
@@ -25,6 +27,7 @@ services:
     restart: always
   wordpress:
     build: ./requirements/wordpress/.
+    image: wordpress
     container_name: wordpress
     volumes:
       - wp-data:/var/www/html
