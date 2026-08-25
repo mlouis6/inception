@@ -6,13 +6,14 @@ services:
     image: nginx
     container_name: nginx
     ports:
-      - 443:443
+      - "443:443"
     volumes:
       - wp-data:/var/www/html:ro
     networks:
       - incep
     depends_on:
-      - wordpress
+      wordpress:
+        condition: service_healthy
     restart: always
   mariadb:
     build: ./requirements/mariadb/.

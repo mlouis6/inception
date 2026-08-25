@@ -22,4 +22,4 @@ ENTRYPOINT ["/entrypoint.sh"]
 HEALTHCHECK \
     --start-period=30s \
     --start-interval=1s \
-    CMD mariadb -u root db_test -e "SELECT 1" || exit 1
+    CMD mariadb -u root "$MYSQL_DATABASE" -e "SELECT 1" || exit 1

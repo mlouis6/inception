@@ -10,10 +10,9 @@ RUN apt-get -y update \
     wget \
     unzip \
     netcat-openbsd \
-    sudo \
+    # sudo \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /var/www/html
 
 RUN wget https://wordpress.org/latest.zip \
     && unzip latest.zip \
@@ -32,6 +31,8 @@ COPY --chown=www-data:www-data web/ /var/www/html/
 EXPOSE 9000
 
 COPY --chmod=+x entrypoint.sh /entrypoint.sh
+
+WORKDIR /var/www/html
 
 ENTRYPOINT ["/entrypoint.sh"]
 
