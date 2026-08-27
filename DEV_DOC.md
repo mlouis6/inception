@@ -1,88 +1,24 @@
-Explain what dev can do
-set up env from scratch
-build and launch with Makefile and Docker Compose
-commands to manage containers and volumes
-identify where dats stored and how persists
-
-to got into container
-docker exec -it <CONNAME> bash
-
-to check tls
-curl -vk https://localhost
-openssl s_client -connect localhost:443
-
-to stop using localhost
-  sudo nano /etc/hosts
-   127.0.0.1 mlouis.42.fr
-  change:
-   nginx conf file: server_name mlouis.42.fr
-   nginx dockerfile: -subj "/CN=mlouis.42.fr" 
-
-volumes
-/var/lib/docker/volumes/
-docker volume create volume_name
-or
-docker run -v volume_name:/path/in/container
-
-LEMP stack (Linux, Nginx, MariaDB, PHP)
-
--------
-docker exec --it <CONTAINER_NAME> bash (bash can be replaced with another command if you only need one thing)
-
-before build -> check path <!-- TODO: -->
-
-directly logged as root
-
-Dev will need to create a `.env` file in `srcs/` directory.
-The `.env` file will need to define the following variables:
-```
-WORDPRESS_PORT
-WORDPRESS_DB_HOST
-WORDPRESS_DB_NAME
-WORDPRESS_DB_USER
-WORDPRESS_DB_PASSWORD
-
-MYSQL_DATABASE
-MYSQL_USER
-MYSQL_PASSWORD
-
-USER_ADMIN
-PASSWORD_ADMIN
-EMAIL_ADMIN
-```
-
-We've had a lambda user (no admin privileges in Wordpress) using thosw variables:
-```
-USER_ONE
-PASSWORD_ONE
-EMAIL_ONE
-```
-
-
------
-
 # Developer Documentation
 
 ## Overview
 
-This project is a Docker-based web stack composed of three services:
+This project is a Docker **LEMP stack**, so based on ***L*inux** (here Debian Bookworm) with the following services:
+* **(*E*)Nginx**, it is the server and entrypoint
+* ***M*ariaDB**, for the database
+* **Wordpress** (with ***P*HP**), to host the website and have admin access
 
-* **Nginx** — acts as the web server and entry point.
-* **WordPress** — provides the website and administration interface.
-* **MariaDB** — stores the WordPress database.
+Each services run in their respective, separate, containers and us a Docker network to communicate.
 
-The services run in separate Docker containers and communicate through a private Docker network.
-
-Persistent data is stored outside the containers using Docker volumes, allowing the containers to be removed and recreated without losing the application data.
+There are two volumes set up to keep persistent datas. One to store MariaDB database and the other to keep webpages for the website, so linked to Wordpress.
 
 ## Prerequisites
 
 Before setting up the project, make sure the following tools are installed:
 
-* **Docker**
-* **Docker Compose**
-* **GNU Make**
-* **Git**
+* Docker
+* Docker Compose
+* GNU Make
+* Sudo
 
 Check the installed versions with:
 
@@ -90,47 +26,8 @@ Check the installed versions with:
 docker --version
 docker compose version
 make --version
-git --version
+sudo --version
 ```
-
-Docker Compose is used to define and run the multi-container application, while the Makefile provides convenient commands for common operations.
-
-## Project Structure
-
-The project is organized approximately as follows:
-
-```text
-.
-├── Makefile
-├── README.md
-├── USER_DOC.md
-├── DEV_DOC.md
-└── srcs/
-    ├── .env
-    ├── docker-compose.yml
-    └── requirements/
-        ├── nginx/
-        ├── wordpress/
-        └── mariadb/
-```
-
-The exact structure may contain additional configuration or source files.
-
-### `Makefile`
-
-The Makefile provides shortcuts for building, starting, stopping, and cleaning the project.
-
-### `srcs/docker-compose.yml`
-
-The Docker Compose configuration defines the services, networks, volumes, environment variables, and other Docker configuration required by the stack.
-
-### `srcs/requirements/`
-
-This directory contains the configuration and Dockerfiles for each service:
-
-* `nginx/`
-* `wordpress/`
-* `mariadb/`
 
 ## Environment Configuration
 
@@ -140,8 +37,9 @@ Before building the project, create the environment file:
 srcs/.env
 ```
 
-Use the following template:
+Use the following template, adding value to each variable:
 
+<!-- TODO: check .env -->
 ```env
 WORDPRESS_PORT=
 WORDPRESS_DB_HOST=
@@ -162,10 +60,6 @@ PASSWORD_ONE=
 EMAIL_ONE=
 ```
 
-Replace each empty value with the appropriate configuration.
-
-### Secrets
-
 The `.env` file contains sensitive information, including database and WordPress credentials.
 
 It must **not be committed to Git** or shared publicly.
@@ -176,11 +70,7 @@ Make sure it is included in `.gitignore`:
 srcs/.env
 ```
 
-For production environments, credentials should preferably be managed using a dedicated secrets-management solution rather than storing them directly in a local environment file.
-
 ## Building and Launching the Project
-
-### Using the Makefile
 
 The simplest way to build and launch the complete stack is:
 
@@ -202,85 +92,63 @@ To launch the stack in detached mode:
 make up
 ```
 
-The containers will run in the background.
+## Using the Makefile
 
-### Using Docker Compose Directly
-
-The project can also be managed without the Makefile.
-
-From the project root, use:
+* To display every information about the Docker environment:
 
 ```bash
-docker compose -f srcs/docker-compose.yml up --build
+make check
 ```
 
-To start the stack in detached mode:
+This will display all the containers, images, volumes abd networks.
 
-```bash
-docker compose -f srcs/docker-compose.yml up --build -d
-```
-
-To stop the stack:
-
-```bash
-docker compose -f srcs/docker-compose.yml down
-```
-
-Using the Makefile is recommended because it also handles project-specific directory and cleanup operations.
-
-## Managing Containers
-
-### List running containers
-
-```bash
-docker ps
-```
-
-To display all containers, including stopped ones:
-
-```bash
-docker ps -a
-```
-
-### Start stopped containers
-
-Using the Makefile:
+* To start the containers:
 
 ```bash
 make start
 ```
 
-Or with Docker:
-
-```bash
-docker compose -f srcs/docker-compose.yml start
-```
-
-### Stop containers
-
-Using the Makefile:
+* To stop the containers:
 
 ```bash
 make stop
 ```
 
-Or with Docker Compose:
+Stopping the containers should not delete its persistent data.
 
-```bash
-docker compose -f srcs/docker-compose.yml stop
-```
-
-Stopping a container does not remove it or its persistent data.
-
-### Remove containers
+* To delete the containers:
 
 ```bash
 make down
 ```
 
-This stops and removes the project's containers and Docker network.
+This stops and removes the containers and network.
 
 The persistent volumes are kept.
+
+* To clean the project:
+
+```bash
+make fclean
+```
+
+This stops and delete the containers, removes volumes and network.
+
+Persistent data are deleted.
+
+* To prune the cache:
+
+```bash
+make prune
+```
+
+* To clean and restart
+
+```bash
+make re
+```
+
+This combines ``make fclean`` and ``make up``, so the containers will be run in detach mode.
 
 ### View logs
 
@@ -290,7 +158,7 @@ To inspect the logs of a specific container:
 docker logs <container_name>
 ```
 
-For example:
+Each container is named by the service name in lower case, so use:
 
 ```bash
 docker logs nginx
@@ -304,189 +172,64 @@ When using Docker Compose, logs for all services can be viewed with:
 docker compose -f srcs/docker-compose.yml logs
 ```
 
-To follow logs in real time:
+Add a container's name at the end to get its specific logs.
+
+## Interact with container
+
+To check something inside a container us:
 
 ```bash
-docker compose -f srcs/docker-compose.yml logs -f
+docker exec -it <container_name> <command>
 ```
 
-## Managing Images
-
-List the images currently available:
-
-```bash
-docker images
-```
-
-Images can be rebuilt with:
-
-```bash
-make
-```
-
-Or directly with Docker Compose:
-
-```bash
-docker compose -f srcs/docker-compose.yml build
-```
-
-To remove the project's containers and images as part of a complete cleanup:
-
-```bash
-make fclean
-```
-
-> **Warning:** `make fclean` also removes the project's persistent data directories. Do not use it if the stored data needs to be preserved.
-
-## Managing Volumes
-
-Docker volumes are used to keep data independent from the lifecycle of the containers.
-
-List all Docker volumes:
-
-```bash
-docker volume ls
-```
-
-Inspect a volume:
-
-```bash
-docker volume inspect <volume_name>
-```
-
-The project uses persistent storage for data that must survive container recreation, particularly:
-
-* WordPress files
-* MariaDB database files
-
-Removing a container does **not** remove its associated persistent volume when using the project's normal `make down` command.
+Replace `<command>` with `bash` to enter the container and do multiple commands.
 
 ## Data Persistence
 
-Containers themselves should be considered disposable.
-
-Application data is stored in persistent volumes instead of relying on the container's writable filesystem.
-
-The general architecture is:
-
-```text
-                    Docker
-                      │
-          ┌───────────┼───────────┐
-          │           │           │
-       Nginx       WordPress    MariaDB
-          │           │           │
-          │           ▼           ▼
-          │      WordPress     Database
-          │        Volume        Volume
-          │
-          └──── Docker Network ────┘
-```
-
 The exact volume names and host locations are defined by the Docker Compose configuration.
 
-### Host Data Directories
+Change the path defined after ``device`` for each volume in the `docker-compose.yml` file:
 
-The project may use directories on the host as the source for persistent storage, depending on the Compose configuration.
+```yaml
+volumes:
+  wp-data:
+    [...]
+    driver_opts:
+      device: <path to wordpress data>
+  db-data:
+    [...]
+    driver_opts:
+      device: <path to mariadb data>
+```
+
+This change also need to be made in the `Makefile`:
+```make
+all:
+	mkdir -p <path to wordpress data>
+	mkdir -p <path to mariadb data>
+	$(COMPOSE) up --build
+
+up:
+	mkdir -p <path to wordpress data>
+	mkdir -p <path to mariadb data>
+	$(COMPOSE) up -d --build
+
+[...]
+
+fclean:
+	$(COMPOSE) down -v --rmi local
+	sudo rm -rf <path to wordpress data>
+	sudo rm -rf <path to mariadb data>
+
+[...]
+
+re:
+	$(COMPOSE) down -v --rmi local
+	sudo rm -rf <path to wordpress data>
+	sudo rm -rf <path to mariadb data>
+	mkdir -p <path to wordpress data>
+	mkdir -p <path to mariadb data>
+	$(COMPOSE) up -d
+```
 
 These directories should **not be deleted manually** while the project is running.
-
-If the project uses bind-mounted directories, their locations can be identified in:
-
-```text
-srcs/docker-compose.yml
-```
-
-Look for the `volumes:` sections of the WordPress and MariaDB services.
-
-For Docker-managed named volumes, use:
-
-```bash
-docker volume inspect <volume_name>
-```
-
-to find where Docker stores the data on the host.
-
-## Complete Cleanup
-
-The following command performs a complete project cleanup:
-
-```bash
-make fclean
-```
-
-It removes:
-
-* Running/stopped containers
-* Docker network
-* Project images
-* Persistent volume data directories
-
-Because persistent data is removed, this command should only be used when the data is no longer needed or has been backed up.
-
-Docker's unused build/cache data can be cleaned separately with:
-
-```bash
-make prune
-```
-
-## Checking the Environment
-
-The project provides a convenience command for checking the main Docker resources:
-
-```bash
-make check
-```
-
-This displays information about:
-
-* Containers and their health status
-* Docker images
-* Docker volumes
-* Docker networks
-
-For more detailed troubleshooting, the following commands are useful:
-
-```bash
-docker ps -a
-docker images
-docker volume ls
-docker network ls
-docker compose -f srcs/docker-compose.yml logs
-```
-
-## Development Workflow
-
-A typical development workflow is:
-
-```text
-1. Clone the repository
-        │
-        ▼
-2. Create srcs/.env
-        │
-        ▼
-3. Configure credentials
-        │
-        ▼
-4. Run `make`
-        │
-        ▼
-5. Check services with `make check`
-        │
-        ▼
-6. Develop / modify configuration
-        │
-        ▼
-7. Rebuild with `make`
-```
-
-When modifying a Dockerfile or service configuration, rebuild the affected image before testing the changes:
-
-```bash
-docker compose -f srcs/docker-compose.yml build
-docker compose -f srcs/docker-compose.yml up
-```
-
-Keep persistent data separate from container configuration so that containers can be safely rebuilt without unnecessarily losing application or database data.
-
