@@ -233,3 +233,5 @@ re:
 ```
 
 These directories should **not be deleted manually** while the project is running.
+
+<!-- TODO: add certificates info (like .env) in case i find some motivate -->
