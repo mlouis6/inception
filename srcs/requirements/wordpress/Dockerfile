@@ -10,7 +10,7 @@ RUN apt-get -y update \
     wget \
     unzip \
     netcat-openbsd \
-    # sudo \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -32,7 +32,7 @@ EXPOSE 9000
 
 COPY --chmod=+x entrypoint.sh /entrypoint.sh
 
-WORKDIR /var/www/html
+# WORKDIR /var/www/html
 
 ENTRYPOINT ["/entrypoint.sh"]
 
