@@ -9,6 +9,9 @@ services:
       - "443:443"
     volumes:
       - wp-data:/var/www/html:ro
+    secrets:
+      - nginx_cert
+      - nginx_key
     networks:
       - incep
     depends_on:
@@ -49,14 +52,20 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/mlouis/data/wordpress
+      device: ${HOME}/data/wordpress
   db-data:
     name: "db-vol"
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/mlouis/data/mariadb
+      device: ${HOME}/data/mariadb
+
+secrets:
+  nginx_cert:
+    file: ./secrets/nginx.cert
+  nginx_key:
+    file: ./secrets/nginx.key
 
 networks:
   incep:
