@@ -19,6 +19,7 @@ Before setting up the project, make sure the following tools are installed:
 * Docker Compose
 * GNU Make
 * Sudo
+* Openssl
 
 Check the installed versions with:
 
@@ -39,7 +40,6 @@ srcs/.env
 
 Use the following template, adding value to each variable:
 
-<!-- TODO: check .env -->
 ```env
 WORDPRESS_PORT=
 WORDPRESS_DB_HOST=
@@ -60,14 +60,27 @@ PASSWORD_ONE=
 EMAIL_ONE=
 ```
 
-The `.env` file contains sensitive information, including database and WordPress credentials.
+For the nginx certificate, create a `secrets/` directory inside `srcs/` and add `nginx.key` and `nginx.cert` to it.
 
-It must **not be committed to Git** or shared publicly.
+Those files can be generated with the following command:
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /home/mlouis/inception/srcs/secrets/nginx.key -out /home/mlouis/inception/srcs/secrets/nginx.cert -subj "/CN=mlouis.42.fr"
+```
+
+The `.env` file contains sensitive information, including database and WordPress credentials. The same is true for the secrets.
+
+**Do not commit either to Git** nor share them publicly.
 
 Make sure it is included in `.gitignore`:
 
 ```gitignore
 srcs/.env
+**/secrets/
+```
+
+To complete the environment setup, it is also needed to map a hostname to the IP address. This can be done by editing `/etc/hosts` and adding the line:
+```
+127.0.0.1	mlouis.42.fr
 ```
 
 ## Building and Launching the Project
@@ -233,5 +246,3 @@ re:
 ```
 
 These directories should **not be deleted manually** while the project is running.
-
-<!-- TODO: add certificates info (like .env) in case i find some motivate -->

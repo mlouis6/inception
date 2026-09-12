@@ -8,11 +8,6 @@ RUN apt-get -y update \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# TODO: generate outside and add to README
-#     openssl \
-# RUN mkdir -p /etc/nginx/certs \
-#     && openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/certs/nginx.key -out /etc/nginx/certs/nginx.cert -subj "/CN=mlouis.42.fr"
-
 COPY nginx/conf /etc/nginx/sites-enabled/default
 
 EXPOSE 443

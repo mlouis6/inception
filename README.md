@@ -107,8 +107,6 @@ To check and go more in depth on some informations about Docker, check on best p
 
 ## Sources
 
-<!-- Add sources -->
-
 Stéphane ROBERT: https://blog.stephane-robert.info/docs/conteneurisation/
 
 https://developer.wordpress.org/advanced-administration/
@@ -116,6 +114,3 @@ https://developer.wordpress.org/advanced-administration/
 https://ubuntu.com/tutorials/install-and-configure-wordpress
 
 https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mariadb-php-lemp-stack-on-debian-10
-
-<!-- TODO: add 127.0.0.1 mlouis.42.fr to /etc/hosts -->
-<!-- TODO: add secrets to readme -->

@@ -12,7 +12,7 @@ Nginx container is the entrypoint, and every container is connected via a Docker
 
 ### Set up environment
 
-#### `.env` file
+#### `.env` file and secrets
 
 Before doing anything, the user will need to create an `.env` file inside the `srcs/` directory.
 Here is the template for the file, just add the desired values after the equal sign:
@@ -36,7 +36,20 @@ PASSWORD_ONE=
 EMAIL_ONE=
 ```
 
-Those values are sensitive, do not share them or publish them anywhere.
+The user will also need a nginx certificate. To generate the right files, use the commands:
+```bash
+mkdir /home/mlouis/inception/srcs/secrets
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /home/mlouis/inception/srcs/secrets/nginx.key -out /home/mlouis/inception/srcs/secrets/nginx.cert -subj "/CN=mlouis.42.fr"
+```
+
+Those values and files are sensitive, do not share them or publish them anywhere.
+
+#### Hostname
+
+Add the following line to `/etc/hosts`:
+```bash
+127.0.0.1	mlouis.42.fr
+```
 
 #### Path to persistent data
 
@@ -114,6 +127,4 @@ To log on the website, access https://mlouis.42.fr/wp-login. The user can use th
 
 Once logged as the user defined as admin (set with `USER_ADMIN`), access the admin panel at https://mlouis.42.fr/wp-admin.
 
-The menu at the left allows to manage users and pages as needed.
-
-<!-- TODO: add more info about admin panel -->
+The menu at the left allows to manage users, pages and comments as needed.

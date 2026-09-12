@@ -4,8 +4,6 @@ server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
 
-#	ssl_certificate /etc/nginx/certs/nginx.cert;
-#	ssl_certificate_key /etc/nginx/certs/nginx.key;
 	ssl_certificate /run/secrets/nginx_cert;
 	ssl_certificate_key /run/secrets/nginx_key;
 
@@ -17,9 +15,6 @@ server {
 	}
 
 	location ~ \.php$ {
-		# fastcgi_split_path_info ^(.+\.php)(/.*)$;
-		# include fastcgi_params;
-		# fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		include fastcgi.conf;
 		fastcgi_pass wordpress:9000;
 		fastcgi_param HTTPS on;

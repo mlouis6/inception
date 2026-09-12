@@ -26,13 +26,12 @@ RUN wget https://wordpress.org/latest.zip \
 
 COPY --chown=www-data:www-data web/ /var/www/html/
 
-# RUN chown -R www-data:www-data /var/www/html/
 
 EXPOSE 9000
 
 COPY --chmod=+x entrypoint.sh /entrypoint.sh
 
-# WORKDIR /var/www/html
+WORKDIR /var/www/html
 
 ENTRYPOINT ["/entrypoint.sh"]
 
