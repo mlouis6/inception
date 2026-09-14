@@ -41,7 +41,6 @@ srcs/.env
 Use the following template, adding value to each variable:
 
 ```env
-WORDPRESS_PORT=
 WORDPRESS_DB_HOST=
 WORDPRESS_DB_NAME=
 WORDPRESS_DB_USER=

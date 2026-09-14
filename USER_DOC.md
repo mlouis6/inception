@@ -17,7 +17,6 @@ Nginx container is the entrypoint, and every container is connected via a Docker
 Before doing anything, the user will need to create an `.env` file inside the `srcs/` directory.
 Here is the template for the file, just add the desired values after the equal sign:
 ```
-WORDPRESS_PORT=
 WORDPRESS_DB_HOST=
 WORDPRESS_DB_NAME=
 WORDPRESS_DB_USER=
